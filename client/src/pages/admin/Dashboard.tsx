@@ -51,7 +51,7 @@ export default function AdminDashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="flex items-center justify-center h-96">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -65,16 +65,16 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-neutral-dark dark:text-white mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             Panneau d'Administration
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-muted-foreground">
             Gérez votre plateforme de pronostics sportifs
           </p>
         </div>
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   Voir, modifier et gérer les comptes utilisateurs
                 </p>
               </CardContent>

@@ -44,7 +44,7 @@ export default function Blog() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="flex items-center justify-center h-96">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -55,7 +55,7 @@ export default function Blog() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Card>
@@ -63,8 +63,8 @@ export default function Blog() {
               <div className="text-red-500 mb-4">
                 <Search className="h-12 w-12 mx-auto" />
               </div>
-              <h2 className="text-xl font-bold mb-2">Erreur de chargement</h2>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h2 className="text-xl font-bold mb-2 text-foreground">Erreur de chargement</h2>
+              <p className="text-muted-foreground">
                 Impossible de charger les articles du blog
               </p>
             </CardContent>
@@ -75,16 +75,16 @@ export default function Blog() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-neutral-dark dark:text-white mb-4">
+          <h1 className="text-4xl font-bold text-foreground mb-4">
             Blog & Actualités
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
+          <p className="text-xl text-muted-foreground">
             Découvrez nos analyses, conseils et actualités sportives
           </p>
         </div>
@@ -92,7 +92,7 @@ export default function Blog() {
         {/* Search and Filter */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Rechercher un article..."
               value={searchQuery}

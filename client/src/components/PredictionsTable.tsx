@@ -85,7 +85,7 @@ export default function PredictionsTable({ showPremium = false }: PredictionsTab
         <CardContent className="p-6">
           <div className="flex items-center justify-center space-x-2">
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-            <span>Chargement des pronostics...</span>
+            <span className="text-foreground">Chargement des pronostics...</span>
           </div>
         </CardContent>
       </Card>
@@ -97,7 +97,7 @@ export default function PredictionsTable({ showPremium = false }: PredictionsTab
       <Card>
         <CardContent className="p-6">
           <div className="text-center text-red-500">
-            Erreur lors du chargement des pronostics
+            <span className="text-foreground">Erreur lors du chargement des pronostics</span>
           </div>
         </CardContent>
       </Card>

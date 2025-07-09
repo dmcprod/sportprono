@@ -73,7 +73,7 @@ export default function Premium() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="flex items-center justify-center h-96">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -152,17 +152,17 @@ export default function Premium() {
   ];
 
   return (
-    <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-neutral-dark dark:text-white mb-4">
+          <h1 className="text-4xl font-bold text-foreground mb-4">
             <Crown className="inline mr-3 text-yellow-500" />
             Plans Premium
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
+          <p className="text-xl text-muted-foreground">
             Choisissez le plan qui correspond à vos besoins
           </p>
           {isSubscriptionActive && (
@@ -177,15 +177,15 @@ export default function Premium() {
 
         {/* Features Comparison */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-center mb-8 text-neutral-dark dark:text-white">
+          <h2 className="text-2xl font-bold text-center mb-8 text-foreground">
             Pourquoi passer Premium?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="text-center">
               <CardContent className="p-6">
                 <TrendingUp className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-bold mb-2">Analyses Avancées</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <h3 className="font-bold mb-2 text-foreground">Analyses Avancées</h3>
+                <p className="text-sm text-muted-foreground">
                   Accédez à des analyses poussées avec statistiques détaillées
                 </p>
               </CardContent>
@@ -194,8 +194,8 @@ export default function Premium() {
             <Card className="text-center">
               <CardContent className="p-6">
                 <Zap className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
-                <h3 className="font-bold mb-2">Alertes en Temps Réel</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <h3 className="font-bold mb-2 text-foreground">Alertes en Temps Réel</h3>
+                <p className="text-sm text-muted-foreground">
                   Recevez des notifications instantanées pour les meilleures opportunités
                 </p>
               </CardContent>
@@ -204,8 +204,8 @@ export default function Premium() {
             <Card className="text-center">
               <CardContent className="p-6">
                 <Users className="h-12 w-12 text-secondary mx-auto mb-4" />
-                <h3 className="font-bold mb-2">Support Prioritaire</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <h3 className="font-bold mb-2 text-foreground">Support Prioritaire</h3>
+                <p className="text-sm text-muted-foreground">
                   Bénéficiez d'un support client prioritaire et personnalisé
                 </p>
               </CardContent>
@@ -214,8 +214,8 @@ export default function Premium() {
             <Card className="text-center">
               <CardContent className="p-6">
                 <Shield className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                <h3 className="font-bold mb-2">Garantie Résultats</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <h3 className="font-bold mb-2 text-foreground">Garantie Résultats</h3>
+                <p className="text-sm text-muted-foreground">
                   Garantie de remboursement si vous n'êtes pas satisfait
                 </p>
               </CardContent>
@@ -251,12 +251,12 @@ export default function Premium() {
               )}
 
               <CardHeader className="text-center">
-                <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
-                <div className="text-3xl font-bold mb-2">
+                <CardTitle className="text-xl font-bold text-foreground">{plan.name}</CardTitle>
+                <div className="text-3xl font-bold mb-2 text-foreground">
                   {plan.price}€
-                  <span className="text-sm font-normal text-gray-500">/mois</span>
+                  <span className="text-sm font-normal text-muted-foreground">/mois</span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   {plan.description}
                 </p>
               </CardHeader>
@@ -267,9 +267,9 @@ export default function Premium() {
                     <h4 className="font-medium mb-3 text-green-600">Inclus:</h4>
                     <ul className="space-y-2">
                       {plan.features.map((feature, index) => (
-                        <li key={index} className="flex items-center text-sm">
+                        <li key={index} className="flex items-center text-sm text-foreground">
                           <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-                          {feature}
+                          <span className="text-foreground">{feature}</span>
                         </li>
                       ))}
                     </ul>

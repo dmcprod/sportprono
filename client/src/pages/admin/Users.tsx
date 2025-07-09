@@ -160,14 +160,14 @@ export default function AdminUsers() {
 
   if (user?.role !== "admin") {
     return (
-      <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Card>
             <CardContent className="p-8 text-center">
               <Shield className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h2 className="text-xl font-bold mb-2">Accès Refusé</h2>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h2 className="text-xl font-bold mb-2 text-foreground">Accès Refusé</h2>
+              <p className="text-muted-foreground">
                 Vous n'avez pas les permissions d'administrateur
               </p>
             </CardContent>
@@ -179,7 +179,7 @@ export default function AdminUsers() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="flex items-center justify-center h-96">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -189,7 +189,7 @@ export default function AdminUsers() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -202,11 +202,11 @@ export default function AdminUsers() {
             </Button>
           </Link>
           
-          <h1 className="text-3xl font-bold text-neutral-dark dark:text-white mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             <UsersIcon className="inline mr-3" />
             Gestion des Utilisateurs
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-muted-foreground">
             Gérez les comptes utilisateurs et leurs abonnements
           </p>
         </div>
@@ -214,7 +214,7 @@ export default function AdminUsers() {
         {/* Search and Filter */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Rechercher un utilisateur..."
               value={searchQuery}

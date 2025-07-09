@@ -35,7 +35,7 @@ export default function Landing() {
   });
 
   return (
-    <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       {/* Hero Section */}
@@ -71,32 +71,32 @@ export default function Landing() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white dark:bg-neutral-dark">
+      <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="text-3xl font-bold text-secondary mb-2">
                 {stats?.accuracy || 0}%
               </div>
-              <div className="text-gray-600 dark:text-gray-400">Précision des pronostics</div>
+              <div className="text-muted-foreground">Précision des pronostics</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-primary mb-2">
                 {stats?.totalPredictions || 0}
               </div>
-              <div className="text-gray-600 dark:text-gray-400">Pronostics analysés</div>
+              <div className="text-muted-foreground">Pronostics analysés</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-yellow-500 mb-2">
                 {stats?.activeUsers || 0}
               </div>
-              <div className="text-gray-600 dark:text-gray-400">Utilisateurs actifs</div>
+              <div className="text-muted-foreground">Utilisateurs actifs</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-red-500 mb-2">
                 {stats?.leagues || 0}+
               </div>
-              <div className="text-gray-600 dark:text-gray-400">Championnats couverts</div>
+              <div className="text-muted-foreground">Championnats couverts</div>
             </div>
           </div>
         </div>

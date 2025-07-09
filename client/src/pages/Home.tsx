@@ -30,7 +30,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="flex items-center justify-center h-96">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -46,7 +46,7 @@ export default function Home() {
   const isPremium = user?.subscriptionTier !== "free";
 
   return (
-    <div className="min-h-screen bg-neutral-light dark:bg-neutral-dark">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -54,10 +54,10 @@ export default function Home() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-neutral-dark dark:text-white">
+              <h1 className="text-3xl font-bold text-foreground">
                 Bienvenue, {user?.firstName || user?.email}!
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <p className="text-muted-foreground mt-2">
                 Accédez à tous vos pronostics et analyses
               </p>
             </div>
