@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
 import { insertPredictionSchema, insertBlogPostSchema, insertUserPredictionAccessSchema } from "@shared/schema";
 import { z } from "zod";
 
@@ -12,7 +12,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any).claims.sub;
       const user = await storage.getUser(userId);
       res.json(user);
     } catch (error) {
@@ -45,7 +45,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Check if user has access to premium predictions
       if (prediction.isPremium && req.user) {
-        const userId = req.user.claims.sub;
+        const userId = (req.user as any).claims.sub;
         const user = await storage.getUser(userId);
         
         if (!user || (user.subscriptionTier === 'free' && !await storage.getUserPredictionAccess(userId, id))) {
@@ -133,7 +133,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/predictions/:id/access', isAuthenticated, async (req, res) => {
     try {
       const predictionId = parseInt(req.params.id);
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any).claims.sub;
       
       // Check if user already has access
       const existingAccess = await storage.getUserPredictionAccess(userId, predictionId);
@@ -167,7 +167,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Subscription routes
   app.post('/api/subscription/upgrade', isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any).claims.sub;
       const { tier } = req.body;
       
       if (!['pro', 'expert'].includes(tier)) {
@@ -189,6 +189,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error upgrading subscription:", error);
       res.status(500).json({ message: "Failed to upgrade subscription" });
+    }
+  });
+
+  // Admin routes
+  app.get('/api/admin/users', isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const { limit } = req.query;
+      const users = await storage.getAllUsers(limit ? parseInt(limit as string) : undefined);
+      res.json(users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).json({ message: "Failed to fetch users" });
+    }
+  });
+
+  app.put('/api/admin/users/:id', isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const updatedUser = await storage.updateUser(userId, req.body);
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Error updating user:", error);
+      res.status(500).json({ message: "Failed to update user" });
+    }
+  });
+
+  app.delete('/api/admin/users/:id', isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const userId = req.params.id;
+      await storage.deleteUser(userId);
+      res.json({ message: "User deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      res.status(500).json({ message: "Failed to delete user" });
+    }
+  });
+
+  app.delete('/api/admin/predictions/:id', isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const predictionId = parseInt(req.params.id);
+      await storage.deletePrediction(predictionId);
+      res.json({ message: "Prediction deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting prediction:", error);
+      res.status(500).json({ message: "Failed to delete prediction" });
+    }
+  });
+
+  app.put('/api/admin/blog/:id', isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const postId = parseInt(req.params.id);
+      const validatedData = insertBlogPostSchema.partial().parse(req.body);
+      const updatedPost = await storage.updateBlogPost(postId, validatedData);
+      res.json(updatedPost);
+    } catch (error) {
+      console.error("Error updating blog post:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to update blog post" });
+    }
+  });
+
+  app.delete('/api/admin/blog/:id', isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const postId = parseInt(req.params.id);
+      await storage.deleteBlogPost(postId);
+      res.json({ message: "Blog post deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting blog post:", error);
+      res.status(500).json({ message: "Failed to delete blog post" });
     }
   });
 

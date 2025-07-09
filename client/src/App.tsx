@@ -11,6 +11,10 @@ import Home from "@/pages/Home";
 import PredictionAnalysis from "@/pages/PredictionAnalysis";
 import Premium from "@/pages/Premium";
 import Blog from "@/pages/Blog";
+import AdminDashboard from "@/pages/admin/Dashboard";
+import AdminUsers from "@/pages/admin/Users";
+import AdminPredictions from "@/pages/admin/Predictions";
+import AdminBlog from "@/pages/admin/Blog";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -25,6 +29,10 @@ function Router() {
           <Route path="/prediction/:id" component={PredictionAnalysis} />
           <Route path="/premium" component={Premium} />
           <Route path="/blog" component={Blog} />
+          <Route path="/admin" component={AdminDashboard} />
+          <Route path="/admin/users" component={AdminUsers} />
+          <Route path="/admin/predictions" component={AdminPredictions} />
+          <Route path="/admin/blog" component={AdminBlog} />
         </>
       )}
       <Route component={NotFound} />

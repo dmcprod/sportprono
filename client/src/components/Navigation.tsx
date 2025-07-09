@@ -18,6 +18,10 @@ export default function Navigation() {
     { href: "/premium", label: "Premium" },
   ];
 
+  const adminItems = user?.role === "admin" ? [
+    { href: "/admin", label: "Admin" },
+  ] : [];
+
   return (
     <nav className="bg-white dark:bg-neutral-dark shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,7 +35,7 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => (
+            {[...navItems, ...adminItems].map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -97,7 +101,7 @@ export default function Navigation() {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex flex-col space-y-2">
-              {navItems.map((item) => (
+              {[...navItems, ...adminItems].map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

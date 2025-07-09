@@ -44,6 +44,14 @@ export interface IStorage {
     activeUsers: number;
     leagues: number;
   }>;
+  
+  // Admin operations
+  getAllUsers(limit?: number): Promise<User[]>;
+  updateUser(id: string, data: Partial<UpsertUser>): Promise<User>;
+  deleteUser(id: string): Promise<void>;
+  deletePrediction(id: number): Promise<void>;
+  updateBlogPost(id: number, data: Partial<InsertBlogPost>): Promise<BlogPost>;
+  deleteBlogPost(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -71,13 +79,16 @@ export class DatabaseStorage implements IStorage {
 
   // Prediction operations
   async getPredictions(isPremium?: boolean, limit = 50): Promise<Prediction[]> {
-    let query = db.select().from(predictions).orderBy(desc(predictions.matchDate));
-    
     if (isPremium !== undefined) {
-      query = query.where(eq(predictions.isPremium, isPremium));
+      return db.select().from(predictions)
+        .where(eq(predictions.isPremium, isPremium))
+        .orderBy(desc(predictions.matchDate))
+        .limit(limit);
     }
     
-    return query.limit(limit);
+    return db.select().from(predictions)
+      .orderBy(desc(predictions.matchDate))
+      .limit(limit);
   }
 
   async getPrediction(id: number): Promise<Prediction | undefined> {
@@ -104,13 +115,16 @@ export class DatabaseStorage implements IStorage {
 
   // Blog operations
   async getBlogPosts(published = true, limit = 20): Promise<BlogPost[]> {
-    let query = db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
-    
     if (published) {
-      query = query.where(eq(blogPosts.published, true));
+      return db.select().from(blogPosts)
+        .where(eq(blogPosts.published, true))
+        .orderBy(desc(blogPosts.createdAt))
+        .limit(limit);
     }
     
-    return query.limit(limit);
+    return db.select().from(blogPosts)
+      .orderBy(desc(blogPosts.createdAt))
+      .limit(limit);
   }
 
   async getBlogPost(slug: string): Promise<BlogPost | undefined> {
@@ -181,6 +195,43 @@ export class DatabaseStorage implements IStorage {
       activeUsers: activeUsers.count,
       leagues: leagues.count,
     };
+  }
+
+  // Admin operations
+  async getAllUsers(limit = 100): Promise<User[]> {
+    return db.select().from(users)
+      .orderBy(desc(users.createdAt))
+      .limit(limit);
+  }
+
+  async updateUser(id: string, data: Partial<UpsertUser>): Promise<User> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(users.id, id))
+      .returning();
+    return updatedUser;
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    await db.delete(users).where(eq(users.id, id));
+  }
+
+  async deletePrediction(id: number): Promise<void> {
+    await db.delete(predictions).where(eq(predictions.id, id));
+  }
+
+  async updateBlogPost(id: number, data: Partial<InsertBlogPost>): Promise<BlogPost> {
+    const [updatedPost] = await db
+      .update(blogPosts)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(blogPosts.id, id))
+      .returning();
+    return updatedPost;
+  }
+
+  async deleteBlogPost(id: number): Promise<void> {
+    await db.delete(blogPosts).where(eq(blogPosts.id, id));
   }
 }
 

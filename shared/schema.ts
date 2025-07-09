@@ -37,6 +37,7 @@ export const users = pgTable("users", {
   profileImageUrl: varchar("profile_image_url"),
   subscriptionTier: varchar("subscription_tier").default("free"), // free, pro, expert
   subscriptionExpiry: timestamp("subscription_expiry"),
+  role: varchar("role").default("user"), // user, admin
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
