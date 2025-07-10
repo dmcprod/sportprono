@@ -102,12 +102,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/blog/:slug', async (req, res) => {
+  app.get('/api/blog/:slug', isAuthenticated, async (req, res) => {
     try {
-      const post = await storage.getBlogPost(req.params.slug);
+      const { slug } = req.params;
+      const post = await storage.getBlogPost(slug);
+      
       if (!post) {
         return res.status(404).json({ message: "Blog post not found" });
       }
+      
+      // Only return published posts unless the user is an admin
+      const user = req.user as any;
+      if (!post.published && (!user || user.claims?.role !== "admin")) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      
       res.json(post);
     } catch (error) {
       console.error("Error fetching blog post:", error);

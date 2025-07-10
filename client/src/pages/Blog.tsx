@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Navigation from "@/components/Navigation";
 import { Search, Calendar, User, Clock, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { Link } from "wouter";
 
 export default function Blog() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -119,9 +120,9 @@ export default function Blog() {
         {filteredPosts?.length === 0 ? (
           <Card>
             <CardContent className="p-8 text-center">
-              <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h2 className="text-xl font-bold mb-2">Aucun article trouvé</h2>
-              <p className="text-gray-600 dark:text-gray-400">
+              <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h2 className="text-xl font-bold mb-2 text-foreground">Aucun article trouvé</h2>
+              <p className="text-muted-foreground">
                 Essayez de modifier vos critères de recherche
               </p>
             </CardContent>
@@ -140,7 +141,7 @@ export default function Blog() {
                       {post.category === "Guide" && "📚"}
                       {post.category === "Conseil" && "💡"}
                     </div>
-                    <p className="text-sm text-gray-500">{post.category}</p>
+                    <p className="text-sm text-muted-foreground">{post.category}</p>
                   </div>
                 </div>
 
@@ -150,43 +151,45 @@ export default function Blog() {
                       {post.category}
                     </Badge>
                     {post.readingTime && (
-                      <span className="text-sm text-gray-500 flex items-center">
+                      <span className="text-sm text-muted-foreground flex items-center">
                         <Clock className="h-3 w-3 mr-1" />
                         {post.readingTime} min
                       </span>
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold mb-3 text-neutral-dark dark:text-white">
+                  <h3 className="text-xl font-bold mb-3 text-foreground">
                     {post.title}
                   </h3>
 
                   {post.excerpt && (
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                    <p className="text-muted-foreground mb-4 line-clamp-3">
                       {post.excerpt}
                     </p>
                   )}
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <User className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <User className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
                         {post.author}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Calendar className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-500">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
                         {new Date(post.createdAt).toLocaleDateString('fr-FR')}
                       </span>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <Button variant="ghost" className="w-full justify-between">
-                      Lire l'article
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <Link href={`/blog/${post.slug}`}>
+                      <Button variant="ghost" className="w-full justify-between">
+                        Lire l'article
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
@@ -206,10 +209,10 @@ export default function Blog() {
         {/* Newsletter Signup */}
         <Card className="mt-16 bg-gradient-to-r from-primary/10 to-secondary/10">
           <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-bold mb-4 text-neutral-dark dark:text-white">
+            <h3 className="text-2xl font-bold mb-4 text-foreground">
               Restez informé
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-muted-foreground mb-6">
               Recevez nos dernières analyses et conseils directement dans votre boîte mail
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
