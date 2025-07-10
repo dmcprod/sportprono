@@ -23,7 +23,7 @@ export default function Navigation() {
   ] : [];
 
   return (
-    <nav className="bg-white dark:bg-neutral-dark shadow-lg sticky top-0 z-50 border-b border-border">
+    <nav className="bg-background shadow-lg sticky top-0 z-50 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-4 flex-shrink-0">

@@ -259,7 +259,7 @@ export default function AdminPredictions() {
         {/* Search and Filter */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Rechercher un match..."
               value={searchQuery}
@@ -299,13 +299,14 @@ export default function AdminPredictions() {
                     <TableHead>Confiance</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Statut</TableHead>
+                    <TableHead>Analyse</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredPredictions?.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={9} className="text-center py-8 text-gray-500">
+                      <TableCell colSpan={10} className="text-center py-8 text-muted-foreground">
                         Aucun pronostic trouvé
                       </TableCell>
                     </TableRow>
@@ -314,15 +315,15 @@ export default function AdminPredictions() {
                       <TableRow key={prediction.id}>
                         <TableCell>
                           <div>
-                            <p className="font-medium">
+                            <p className="font-medium text-foreground">
                               {prediction.team1} vs {prediction.team2}
                             </p>
                             {prediction.venue && (
-                              <p className="text-sm text-gray-500">{prediction.venue}</p>
+                              <p className="text-sm text-muted-foreground">{prediction.venue}</p>
                             )}
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="text-foreground">
                           {new Date(prediction.matchDate).toLocaleDateString('fr-FR', {
                             day: 'numeric',
                             month: 'short',
@@ -336,7 +337,7 @@ export default function AdminPredictions() {
                         <TableCell>
                           <Badge variant="secondary">{prediction.prediction}</Badge>
                         </TableCell>
-                        <TableCell className="font-medium">{prediction.odds}</TableCell>
+                        <TableCell className="font-medium text-foreground">{prediction.odds}</TableCell>
                         <TableCell>
                           <div className="flex items-center space-x-1">
                             {renderConfidenceStars(prediction.confidence || 0)}
@@ -355,8 +356,15 @@ export default function AdminPredictions() {
                         <TableCell>
                           <div className="flex items-center space-x-1">
                             <span>{getStatusIcon(prediction.status)}</span>
-                            <span className="text-sm">{prediction.status}</span>
+                            <span className="text-sm text-foreground">{prediction.status}</span>
                           </div>
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/prediction/${prediction.id}`}>
+                            <Button variant="outline" size="sm" className="text-xs">
+                              Voir l'analyse
+                            </Button>
+                          </Link>
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center space-x-2">

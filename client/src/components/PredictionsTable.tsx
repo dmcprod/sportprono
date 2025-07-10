@@ -109,7 +109,7 @@ export default function PredictionsTable({ showPremium = false }: PredictionsTab
       {/* Search and Filter Bar */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Rechercher un match ou une équipe..."
             value={searchQuery}
@@ -155,27 +155,28 @@ export default function PredictionsTable({ showPremium = false }: PredictionsTab
                   <TableHead>Pronostic</TableHead>
                   <TableHead>Cote</TableHead>
                   <TableHead>Statut</TableHead>
+                  <TableHead>Analyse</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredPredictions?.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                       Aucun pronostic trouvé
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredPredictions?.map((prediction) => (
-                    <TableRow key={prediction.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                    <TableRow key={prediction.id} className="hover:bg-accent">
                       <TableCell>
                         <div className="flex flex-col">
-                          <span className="font-medium">
+                          <span className="font-medium text-foreground">
                             {new Date(prediction.matchDate).toLocaleDateString('fr-FR', { 
                               day: 'numeric', 
                               month: 'short' 
                             })}
                           </span>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-muted-foreground">
                             {new Date(prediction.matchDate).toLocaleTimeString('fr-FR', { 
                               hour: '2-digit', 
                               minute: '2-digit' 
@@ -185,11 +186,11 @@ export default function PredictionsTable({ showPremium = false }: PredictionsTab
                       </TableCell>
                       <TableCell>
                         <div className="space-y-1">
-                          <div className="font-medium">
+                          <div className="font-medium text-foreground">
                             {prediction.team1} vs {prediction.team2}
                           </div>
                           {prediction.venue && (
-                            <div className="text-sm text-gray-500">{prediction.venue}</div>
+                            <div className="text-sm text-muted-foreground">{prediction.venue}</div>
                           )}
                         </div>
                       </TableCell>
@@ -204,14 +205,21 @@ export default function PredictionsTable({ showPremium = false }: PredictionsTab
                           {prediction.prediction}
                         </Badge>
                       </TableCell>
-                      <TableCell className="font-medium">
+                      <TableCell className="font-medium text-foreground">
                         {prediction.odds}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center space-x-2">
                           {getStatusIcon(prediction.status)}
-                          <span className="text-sm">{getStatusLabel(prediction.status)}</span>
+                          <span className="text-sm text-foreground">{getStatusLabel(prediction.status)}</span>
                         </div>
+                      </TableCell>
+                      <TableCell>
+                        <Link href={`/prediction/${prediction.id}`}>
+                          <Button variant="outline" size="sm" className="text-xs">
+                            Voir l'analyse
+                          </Button>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   ))

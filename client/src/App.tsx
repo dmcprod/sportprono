@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/Landing";
 import Home from "@/pages/Home";
+import Predictions from "@/pages/Predictions";
 import PredictionAnalysis from "@/pages/PredictionAnalysis";
 import Premium from "@/pages/Premium";
 import Blog from "@/pages/Blog";
@@ -26,6 +27,7 @@ function Router() {
       ) : (
         <>
           <Route path="/" component={Home} />
+          <Route path="/predictions" component={Predictions} />
           <Route path="/prediction/:id" component={PredictionAnalysis} />
           <Route path="/premium" component={Premium} />
           <Route path="/blog" component={Blog} />
